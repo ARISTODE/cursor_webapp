@@ -121,6 +121,81 @@ header p {
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
+/* Callout Box Styles */
+.callout-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.callout-box.show {
+    opacity: 1;
+}
+
+.callout-content {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.callout-box.show .callout-content {
+    transform: scale(1);
+}
+
+.callout-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    line-height: 1;
+    user-select: none;
+}
+
+.callout-close:hover {
+    color: #333;
+}
+
+.callout-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 0;
+    padding-right: 40px;
+    line-height: 1.3;
+    background: linear-gradient(45deg, #e74c3c, #f39c12);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    from {
+        text-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(243, 156, 18, 0.5);
+    }
+}
+
 @media (max-width: 768px) {
     .books-grid {
         grid-template-columns: 1fr;
@@ -133,5 +208,21 @@ header p {
     
     .book-card {
         padding: 20px;
+    }
+    
+    .callout-content {
+        padding: 30px;
+        margin: 20px;
+    }
+    
+    .callout-title {
+        font-size: 1.5rem;
+        padding-right: 30px;
+    }
+    
+    .callout-close {
+        font-size: 1.5rem;
+        top: 10px;
+        right: 15px;
     }
 }

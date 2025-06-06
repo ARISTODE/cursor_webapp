@@ -73,6 +73,53 @@ const books = [
     }
 ];
 
+function createCalloutBox(title) {
+    // Remove any existing callout box
+    const existingCallout = document.querySelector('.callout-box');
+    if (existingCallout) {
+        existingCallout.remove();
+    }
+
+    const calloutBox = document.createElement('div');
+    calloutBox.className = 'callout-box';
+    calloutBox.innerHTML = `
+        <div class="callout-content">
+            <span class="callout-close">&times;</span>
+            <h2 class="callout-title">${title}</h2>
+        </div>
+    `;
+
+    // Add click event to close button
+    const closeBtn = calloutBox.querySelector('.callout-close');
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        calloutBox.remove();
+    });
+
+    // Add click event to close when clicking outside
+    calloutBox.addEventListener('click', (e) => {
+        if (e.target === calloutBox) {
+            calloutBox.remove();
+        }
+    });
+
+    // Add ESC key functionality
+    const handleEscape = (e) => {
+        if (e.key === 'Escape') {
+            calloutBox.remove();
+            document.removeEventListener('keydown', handleEscape);
+        }
+    };
+    document.addEventListener('keydown', handleEscape);
+
+    document.body.appendChild(calloutBox);
+    
+    // Add animation
+    setTimeout(() => {
+        calloutBox.classList.add('show');
+    }, 10);
+}
+
 function createBookCard(book) {
     const bookCard = document.createElement('div');
     bookCard.className = 'book-card';
@@ -83,6 +130,11 @@ function createBookCard(book) {
         <div class="book-year">Published: ${book.year}</div>
         <div class="book-genre">${book.genre}</div>
     `;
+    
+    // Add click event listener to show callout box
+    bookCard.addEventListener('click', () => {
+        createCalloutBox(book.title);
+    });
     
     return bookCard;
 }
